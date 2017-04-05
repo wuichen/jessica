@@ -1,0 +1,229 @@
+@mixin animations() {
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+}
+
+.page-home {
+    height: 120vh;
+}
+
+.video-background.showVideo {
+    z-index: 1;
+    #youtube-player {
+        filter: blur(0px);
+    }
+}
+
+.video-background.noblur {
+    #youtube-player {
+        filter: blur(0px);
+    }
+}
+
+.video-background {
+    background: #000;
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -99;
+
+    #youtube-player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: blur(6px);
+      @include animations();
+    } 
+
+}
+
+.overlay {
+    opacity: 0.8;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    width: 100%;
+    height: 100%;
+    background: crimson;
+}
+
+.overlay.onHide {
+    opacity: 0;
+}
+
+.main-intro {
+    padding-top: 15%;
+    opacity: 1;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    @include animations();
+    p {
+        color: white;
+        margin: 0 !important;
+        text-align: center;
+
+        &.main-title {
+          font-size: 80px;
+          font-weight: 100;
+        }
+
+        &.main-sub {
+          font-size: 25px;
+          font-weight: 100;
+        }
+    }
+}
+
+.main-intro.onMoveTop {
+    padding-top: 3%;
+    p {
+      &.main-title {
+        font-size: 30px;
+        font-weight: 100;
+        text-align: center;
+      }
+      &.main-sub {
+        font-size: 15px;
+        font-weight: 100;
+        text-align: center;
+      }
+    }
+}
+
+.main-intro.onHide {
+    visiblility: hidden;
+    opacity: 0;
+}
+
+.video-library {
+    visibility: visible;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    top: 20%;
+    width: 60%;
+    @include animations();
+    z-index: 1;
+    overflow-y: auto;
+    bottom: 0;
+    height: 80%;
+    padding: 30px 20px 0 20px;
+}
+
+.video-library.onHide {
+    visibility: hidden;
+    opacity: 0;
+    top: 25%;
+}
+
+.video-details {
+    visibility: visible;
+    position: fixed;
+    left: 60%;
+    top: 20%;
+    width: 40%;
+    height: 80%;
+    @include animations();
+    z-index: 1;
+    bottom: 0;
+    overflow-y: auto;
+    padding: 20px;
+    color: white;
+
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    p {
+        white-space: pre-wrap;
+    }
+}
+
+.video-details.onHide {
+    visibility: hidden;
+    opacity: 0;
+    left: 65%;
+}
+
+.scrolls {
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  white-space: nowrap
+}
+.videoCard {
+  color: crimson;
+  white-space: normal;
+
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+  box-shadow: 1px 1px 10px #999;
+  margin: 10px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: 380px;
+  background-position: center;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.videoCard-desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 200px;
+  background: white;
+  opacity: 0;
+  padding: 50px 10px 10px 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.videoCard:hover {
+  background-size: 480px;
+  .videoCard-desc {
+      opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 570px) {
+
+    .video-library {
+        width: 100%;
+        height: 300px;
+        top: 50px;
+    }
+
+    .video-details {
+        left: 0;
+        top: 350px;
+        width: 100%;
+    }
+}
+
+
