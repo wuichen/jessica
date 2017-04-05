@@ -41,8 +41,12 @@ export class Home extends React.Component {
 		});
 
 		setInterval(() => {
-			$('.fa-play-circle-o').toggleClass('react')
+			$('.fa-play-circle-o').toggleClass('jump')
 		}, 200)
+
+		// setInterval(() => {
+		// 	$('.fa-ellipsis-h').toggleClass('jump')
+		// }, 200)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -155,6 +159,13 @@ export class Home extends React.Component {
 								</div>
 							)
 						})}
+						<div className='loadMoreCard'>
+							<div className='videoCard-desc'>
+								<p>Load More</p>
+								<i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+							</div>
+						</div>
+
 					</div>
 				</div>
 

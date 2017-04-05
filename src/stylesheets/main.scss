@@ -59,7 +59,7 @@
     opacity: 0;
 }
 
-.fa-play-circle-o {
+.fa-play-circle-o, .fa-ellipsis-h {
     font-size: 60px;
     color: white;
     -webkit-transition: all 0.2s linear;
@@ -68,7 +68,7 @@
     transition: all 0.2s linear;
 }
 
-.fa-play-circle-o.react {
+.fa-play-circle-o.jump, .fa-ellipsis-h.jump {
     font-size: 65px;
 }
 
@@ -86,7 +86,6 @@
     @include animations();
     p {
         color: white;
-        margin: 0 !important;
         text-align: center;
 
         &.main-title {
@@ -206,6 +205,40 @@
   -moz-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
+}
+
+.loadMoreCard {
+  white-space: normal;
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+  margin: 10px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  .videoCard-desc {
+    opacity: 1;
+    background: transparent;
+  }
+  p {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+}
+
+.loadMoreCard:hover {
+  .videoCard-desc {
+    background: white;
+    opacity: 0.8;
+  }
+  p {
+    color: crimson;
+  }
+
+  .fa-ellipsis-h {
+    color: crimson;
+  }
 }
 
 .videoCard-desc {
