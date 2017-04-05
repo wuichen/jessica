@@ -25,7 +25,7 @@ export class Home extends React.Component {
 		$(window).on('scroll', function() {
 		    var scrollTop = $(this).scrollTop();
 
-		    if (scrollTop < 50) {
+		    if (scrollTop < 100) {
 		    	thisComponent.setState({
 		    		isSmallIntro: false,
 		    		hideVideos: true
@@ -39,12 +39,20 @@ export class Home extends React.Component {
 		    	})
 		    }
 		});
+
+		setInterval(() => {
+			$('.fa-play-circle-o').toggleClass('react')
+		}, 200)
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.selectedVideo) {
+		console.log(nextProps);
+		if (nextProps.selectedVideo && !this.state.player) {
 			this.setState({
-				player: new YTPlayer('#youtube-player')
+				player: new YTPlayer('#youtube-player', {
+					autoplay: false,
+					related: false
+				})
 			})
 		}
 	}
@@ -52,12 +60,13 @@ export class Home extends React.Component {
 	componentDidUpdate() {
 		if (this.props.selectedVideo) {
 			if (this.state.player.videoId != this.props.selectedVideo.snippet.resourceId.videoId) {
-				this.state.player.load(this.props.selectedVideo.snippet.resourceId.videoId);
+				this.state.player.load(this.props.selectedVideo.snippet.resourceId.videoId, false);
 			}
 		}
 	}
 
 	playVideo() {
+		this.state.player.play();
 		let thisComponent = this;
 		this.setState({
     		isSmallIntro: true,
@@ -74,6 +83,14 @@ export class Home extends React.Component {
     	}, 1000)
 	}
 
+	selectVideo(video) {
+		// console.log(video)
+		this.props.dispatch({
+			type: 'SELECT_VIDEO',
+			video: video
+		})
+	}
+
   	// render
   	render() {
   		if (this.state.player) {
@@ -84,15 +101,28 @@ export class Home extends React.Component {
 					hideVideos: false,
 					isSmallIntro: true
 				})
+				window.scroll(0,150) 
 			})
 		}
+		let dateString;
+		if (this.props.selectedVideo) {
+			let date = new Date(this.props.selectedVideo.snippet.publishedAt);
+			dateString = 'Published At: ' + date.getUTCFullYear() + '.' + date.getUTCMonth() + '.' + date.getUTCDate()
+		}
+
 	    return (
 	      	<div className="page-home">
 	      		<div className={classnames('overlay', { onHide: this.state.hideOverlay})}></div>
       			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: this.state.isSmallIntro})}>
       				<p className='main-title'>Jessica's vlog</p>
-      				{!this.state.isSmallIntro && <p><a href='#' onClick={() => {this.playVideo()}}>play</a></p>}
       				<p className='main-sub'>Make up, lookbook, and travel</p>
+      				{!this.state.isSmallIntro && (
+      					<p>
+      						<a href='#' onClick={() => {this.playVideo()}}>
+      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+							</a>
+						</p>
+					)}
       			</div>
 				<div className={classnames('video-background', { showVideo: this.state.showVideo, noBlur: this.state.hideOverlay})}>
 				    <div className="video-foreground">
@@ -102,7 +132,9 @@ export class Home extends React.Component {
 
 				<div className={classnames('video-library', { onHide: this.state.hideVideos})}>
 					<div className='scrolls'>
-						{this.props.jChannelList.map((video) => {
+						{this.props.jChannelList && this.props.jChannelList.map((video) => {
+							let date = new Date(video.snippet.publishedAt);
+							let dateString = date.getUTCFullYear() + '.' + date.getUTCMonth() + '.' + date.getUTCDate()
 							let divStyle = {
 						      backgroundImage: 'url(' + video.snippet.thumbnails.medium.url + ')'
 						    };
@@ -110,9 +142,15 @@ export class Home extends React.Component {
 								<div
 									style={divStyle} 
 									className='videoCard' 
-									key={video.id}>
+									key={video.id}
+									onClick={() => {
+										this.selectVideo(video);
+									}}>
 									<div className='videoCard-desc'>
 										{video.snippet.title}
+										<br />
+										<br />
+										{dateString}
 									</div>
 								</div>
 							)
@@ -124,8 +162,18 @@ export class Home extends React.Component {
 					<h2>
 						{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
 					</h2>
-					<a href='#' onClick={() => {this.playVideo()}}>play</a>
+					<div className='playBox'>
+						<a href='#' onClick={() => {this.playVideo()}}>
+      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+						</a>
+					</div>
 					<p>
+						{dateString && (
+							<strong>
+								{dateString}
+								<br />
+							</strong>
+						)}
 						{this.props.selectedVideo && this.props.selectedVideo.snippet.description}
 					</p>
 				</div>

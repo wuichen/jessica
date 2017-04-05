@@ -11,7 +11,7 @@ router.get('/youtube/jessicaschannel', (req, res, err) => {
 		key: API_KEY,
 		part: 'snippet',
 		playlistId: 'UUkmdNARD7bwvj2xlMotWoyg',
-		maxResults: 50
+		maxResults: 10
 	}, function(err, result) {
 		if (err) {
 			res.send([])

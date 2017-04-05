@@ -1,13 +1,8 @@
 @mixin animations() {
-    -webkit-transition: all 0.5s linear;
-    -moz-transition: all 0.5s linear;
-    -o-transition: all 0.5s linear;
-    transition: all 0.5s linear;
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
-    transform: translatez(0);
+    -webkit-transition: all 0.5s   linear;
+    -moz-transition: all 0.5s  linear;
+    -o-transition: all 0.5s  linear;
+    transition: all 0.5s   linear;
 }
 
 .page-home {
@@ -64,8 +59,25 @@
     opacity: 0;
 }
 
+.fa-play-circle-o {
+    font-size: 60px;
+    color: white;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.fa-play-circle-o.react {
+    font-size: 65px;
+}
+
+.playBox {
+    height: 80px;
+}
+
 .main-intro {
-    padding-top: 15%;
+    padding-top: 13%;
     opacity: 1;
     position: fixed;
     z-index: 2;
@@ -80,11 +92,14 @@
         &.main-title {
           font-size: 80px;
           font-weight: 100;
+          @include animations();
         }
 
         &.main-sub {
           font-size: 25px;
           font-weight: 100;
+          @include animations();
+          margin-bottom: 30px;
         }
     }
 }
@@ -106,6 +121,7 @@
 }
 
 .main-intro.onHide {
+    z-index: 1;
     visiblility: hidden;
     opacity: 0;
 }
@@ -118,6 +134,7 @@
     top: 20%;
     width: 60%;
     @include animations();
+
     z-index: 1;
     overflow-y: auto;
     bottom: 0;

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export function* insertJessicaChannelList() {
     const videos = yield call(fetchJessicaChannelList);
-    console.log(videos)
     // save the users in state
     yield put({
         type: 'FETCH_JESSICA_CHANNEL_SUCCEED',

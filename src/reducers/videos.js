@@ -13,7 +13,11 @@ export default function videos(state = initialState, action) {
             jChannelList: action.videos,
             selectedVideo: action.videos[0]
         };
-
+    case 'SELECT_VIDEO':
+        return {
+            ...state,
+            selectedVideo: action.video
+        }
     // initial state
     default:
       return state;
