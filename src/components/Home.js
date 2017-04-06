@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import $ from 'jquery';
 import classnames from 'classnames';
-import YTPlayer from 'yt-player';
+
+// yt-player by feross not compiling to es5, thus extracting the code out and manually inserted into the code base
+import YTPlayer from '../yt-player';
 import Linkify from 'react-linkify';
 
 // Home page component

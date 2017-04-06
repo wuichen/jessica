@@ -1,3 +1,8 @@
+notes: 
+
+yt-player by feross not compiling to es5, thus extracting the code out and manually inserted into the code base
+
+
 # React Redux minimal starter kit (boilerplate)
 
 
