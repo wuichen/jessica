@@ -21,9 +21,6 @@
     "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill --require ignore-styles",
     "test-watch": "npm test -- --watch"
   },
-  "engines": {
-    "node": "6.1.0"
-  },
   "babel": {
     "presets": [
       "es2015",
