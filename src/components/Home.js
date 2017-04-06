@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import $ from 'jquery';
 import classnames from 'classnames';
 import YTPlayer from 'yt-player';
+import Linkify from 'react-linkify';
 
 // Home page component
 export class Home extends React.Component {
@@ -50,7 +51,6 @@ export class Home extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
 		if (nextProps.selectedVideo && !this.state.player) {
 			this.setState({
 				player: new YTPlayer('#youtube-player', {
@@ -88,11 +88,19 @@ export class Home extends React.Component {
 	}
 
 	selectVideo(video) {
-		// console.log(video)
 		this.props.dispatch({
 			type: 'SELECT_VIDEO',
 			video: video
 		})
+	}
+
+	loadMore() {
+		if (this.props.nextPageToken) {
+			this.props.dispatch({
+				type: 'LOAD_MORE_FROM_CHANNEL_LIST',
+				nextPageToken: this.props.nextPageToken
+			})
+		} 
 	}
 
   	// render
@@ -117,15 +125,24 @@ export class Home extends React.Component {
 	    return (
 	      	<div className="page-home">
 	      		<div className={classnames('overlay', { onHide: this.state.hideOverlay})}></div>
-      			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: this.state.isSmallIntro})}>
-      				<p className='main-title'>Jessica's vlog</p>
+      			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: (this.state.isSmallIntro && this.props.jChannelList.length)})}>
+      				<p className='main-title'>Jessica lin Channel</p>
       				<p className='main-sub'>Make up, lookbook, and travel</p>
       				{!this.state.isSmallIntro && (
-      					<p>
-      						<a href='#' onClick={() => {this.playVideo()}}>
-      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
-							</a>
-						</p>
+      					<div>
+	      					<p className='playBox'>
+	      						<a href='#' onClick={() => {this.playVideo()}}>
+	      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+								</a>
+							</p>
+							<div className='social-icons'>
+								<a href='http://weibo.com/u/5998160280?is_all=1'><img src='/media/weibo.png' alt='weibo' /></a>
+								<a href='https://www.instagram.com/jessicalinchannel/'><img src='/media/instagram.png' alt='instagram' /></a>
+								<a href='http://www.meipai.com/user/1097096832'><img src='/media/meipai.png' alt='meipai' /></a>
+								<a href='http://space.bilibili.com/44334605/#!/index'><img src='/media/bili.png' alt='bili' /></a>
+								<a href='https://www.youtube.com/channel/UCkmdNARD7bwvj2xlMotWoyg/about'><img src='/media/youtube.png' alt='youtube' /></a>
+							</div>
+						</div>
 					)}
       			</div>
 				<div className={classnames('video-background', { showVideo: this.state.showVideo, noBlur: this.state.hideOverlay})}>
@@ -133,61 +150,70 @@ export class Home extends React.Component {
 				    	<div id='youtube-player'></div>
 				    </div>
 				</div>
-
-				<div className={classnames('video-library', { onHide: this.state.hideVideos})}>
-					<div className='scrolls'>
-						{this.props.jChannelList && this.props.jChannelList.map((video) => {
-							let date = new Date(video.snippet.publishedAt);
-							let dateString = date.getUTCFullYear() + '.' + date.getUTCMonth() + '.' + date.getUTCDate()
-							let divStyle = {
-						      backgroundImage: 'url(' + video.snippet.thumbnails.medium.url + ')'
-						    };
-							return (
-								<div
-									style={divStyle} 
-									className='videoCard' 
-									key={video.id}
-									onClick={() => {
-										this.selectVideo(video);
-									}}>
-									<div className='videoCard-desc'>
-										{video.snippet.title}
-										<br />
-										<br />
-										{dateString}
+				{this.props.jChannelList && (
+					<div>
+						<div className={classnames('video-library', { onHide: this.state.hideVideos})}>
+							<div className='scrolls'>
+								{this.props.jChannelList && this.props.jChannelList.map((video) => {
+									let date = new Date(video.snippet.publishedAt);
+									let dateString = date.getUTCFullYear() + '.' + date.getUTCMonth() + '.' + date.getUTCDate()
+									let divStyle = {
+								      backgroundImage: 'url(' + video.snippet.thumbnails.medium.url + ')'
+								    };
+									return (
+										<div
+											style={divStyle} 
+											className='videoCard' 
+											key={video.id}
+											onClick={() => {
+												this.selectVideo(video);
+											}}>
+											<div className='videoCard-desc'>
+												{video.snippet.title}
+												<br />
+												<br />
+												{dateString}
+											</div>
+										</div>
+									)
+								})}
+								{this.props.nextPageToken && (
+									<div className='loadMoreCard' onClick={() => {this.loadMore()}}>
+										<div className='videoCard-desc'>
+											<p>Load More</p>
+											<i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+										</div>
 									</div>
-								</div>
-							)
-						})}
-						<div className='loadMoreCard'>
-							<div className='videoCard-desc'>
-								<p>Load More</p>
-								<i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+								)}
+
 							</div>
 						</div>
 
+						<div className={classnames('video-details', { onHide: this.state.hideVideos})}>
+							<h2>
+								{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
+							</h2>
+							<div className='playBox'>
+								<a href='#' onClick={() => {this.playVideo()}}>
+		      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+								</a>
+							</div>
+							{dateString && (
+								<p>
+									<strong>
+										{dateString}
+										<br />
+									</strong>
+								</p>
+							)}
+							<p>
+								{this.props.selectedVideo && 
+									<Linkify>{this.props.selectedVideo.snippet.description}</Linkify>
+								}
+							</p>
+						</div>
 					</div>
-				</div>
-
-				<div className={classnames('video-details', { onHide: this.state.hideVideos})}>
-					<h2>
-						{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
-					</h2>
-					<div className='playBox'>
-						<a href='#' onClick={() => {this.playVideo()}}>
-      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
-						</a>
-					</div>
-					<p>
-						{dateString && (
-							<strong>
-								{dateString}
-								<br />
-							</strong>
-						)}
-						{this.props.selectedVideo && this.props.selectedVideo.snippet.description}
-					</p>
-				</div>
+				)}
 	      	</div>
 	    );
   }
@@ -195,7 +221,8 @@ export class Home extends React.Component {
 function mapStateToProps(state) {
   	return {
   		jChannelList: state.videos.jChannelList,
-  		selectedVideo: state.videos.selectedVideo
+  		selectedVideo: state.videos.selectedVideo,
+  		nextPageToken: state.videos.nextPageToken
   	};
 }
 export default connect(mapStateToProps)(Home);

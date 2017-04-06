@@ -5,6 +5,10 @@
     transition: all 0.5s   linear;
 }
 
+::-webkit-scrollbar {
+      width: 5px;
+} /* this targets the default scrollbar (compulsory) */
+
 .page-home {
     height: 120vh;
 }
@@ -74,6 +78,13 @@
 
 .playBox {
     height: 80px;
+}
+
+.social-icons {
+    text-align: center;
+    a {
+        margin: 15px;
+    }
 }
 
 .main-intro {
@@ -167,6 +178,10 @@
 
     p {
         white-space: pre-wrap;
+
+        a {
+          color: peachpuff;
+        }
     }
 }
 
@@ -205,6 +220,7 @@
   -moz-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
+  animation: fadein 0.5s;
 }
 
 .loadMoreCard {
@@ -274,6 +290,35 @@
         top: 350px;
         width: 100%;
     }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 
