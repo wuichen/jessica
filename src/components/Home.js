@@ -106,11 +106,11 @@ export class Home extends React.Component {
 	}
 
 	disableBodyScroll() {
-		$('body').css('overflow','hidden');
+		$('body').css('overflow-y','hidden');
 	}
 
 	enableBodyScroll() {
-		$('body').css('overflow','auto');
+		$('body').css('overflow-y','auto');
 	}
 
   	// render
