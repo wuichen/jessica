@@ -197,7 +197,7 @@ export class Home extends React.Component {
 							</div>
 						</div>
 
-						<div onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll} className={classnames('video-details', { onHide: this.state.hideVideos})}>
+						<div onMouseOver={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll} className={classnames('video-details', { onHide: this.state.hideVideos})}>
 							<h2>
 								{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
 							</h2>
