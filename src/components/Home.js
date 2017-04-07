@@ -221,27 +221,29 @@ export class Home extends React.Component {
 						</div>
 
 						<div onMouseOver={() => {this.disableBodyScroll()}} onMouseLeave={() => {this.enableBodyScroll()}} className={classnames('video-details', { onHide: this.state.hideVideos})}>
-							<h2>
-								{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
-							</h2>
-							<div className='playBox'>
-								<a href='#' onClick={() => {this.playVideo()}}>
-		      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
-								</a>
-							</div>
-							{dateString && (
+							<div className='scroll'>
+								<h2>
+									{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
+								</h2>
+								<div className='playBox'>
+									<a href='#' onClick={() => {this.playVideo()}}>
+			      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+									</a>
+								</div>
+								{dateString && (
+									<p>
+										<strong>
+											{dateString}
+											<br />
+										</strong>
+									</p>
+								)}
 								<p>
-									<strong>
-										{dateString}
-										<br />
-									</strong>
+									{this.props.selectedVideo && 
+										<Linkify>{this.props.selectedVideo.snippet.description}</Linkify>
+									}
 								</p>
-							)}
-							<p>
-								{this.props.selectedVideo && 
-									<Linkify>{this.props.selectedVideo.snippet.description}</Linkify>
-								}
-							</p>
+							</div>
 						</div>
 					</div>
 				)}
