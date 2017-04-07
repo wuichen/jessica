@@ -89,7 +89,6 @@
     left: 0;
     right: 0;
     @include animations(0.5s);
-    transform: translateZ(0);
     p {
         color: white;
         text-align: center;
