@@ -89,6 +89,7 @@
     left: 0;
     right: 0;
     @include animations(0.5s);
+    transform: translateZ(0);
     p {
         color: white;
         text-align: center;
@@ -109,7 +110,7 @@
 }
 
 .main-intro.onMoveTop {
-    transform: translate3d(0, -30%, 0);
+    padding-top: 3%;
     p {
       &.main-title {
         font-size: 30px;
