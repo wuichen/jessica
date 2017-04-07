@@ -28,18 +28,19 @@ export class Home extends React.Component {
 		$(window).on('scroll', function() {
 		    var scrollTop = $(this).scrollTop();
 
-		    if (scrollTop < 100) {
-		    	thisComponent.setState({
-		    		isSmallIntro: false,
-		    		hideVideos: true
-		    	})
-		    } else {
+		    if (scrollTop > 0) {
 		    	thisComponent.setState({
 		    		isSmallIntro: true,
 		    		hideVideos: false,
 		    		hideOverlay: false,
 		    		showVideo: false
 		    	})
+		    } else {
+		    	thisComponent.setState({
+		    		isSmallIntro: false,
+		    		hideVideos: true
+		    	})
+		    	
 		    }
 		});
 
