@@ -294,6 +294,31 @@
         top: 350px;
         width: 100%;
     }
+
+
+    .main-intro {
+        p {
+          &.main-title {
+              font-size: 50px;
+            }
+
+            &.main-sub {
+              font-size: 20px;
+              margin-bottom: 15px;
+            }
+        }
+    }
+
+    .main-intro.onMoveTop {
+        p {
+          &.main-title {
+            font-size: 30px;
+          }
+          &.main-sub {
+            font-size: 15px;
+          }
+        }
+    }
 }
 
 @keyframes fadein {
