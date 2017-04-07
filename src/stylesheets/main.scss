@@ -58,15 +58,34 @@
     opacity: 0;
 }
 
-.fa-play-circle-o, .fa-ellipsis-h {
+.fa-play-circle-o, .fa-angle-double-down {
     font-size: 60px;
     color: white;
-    @include animations(0.5s);
+    @include animations(0.4s);
 }
 
-.fa-play-circle-o.jump, .fa-ellipsis-h.jump {
+.fa-play-circle-o.jump {
     transform:scale(1.2,1.2);
 }
+
+.scrollBox {
+  width: 100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  opacity: 1;    
+  @include animations(0.3s);
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.scrollBox:hover {
+  opacity: 0.4;
+}
+
 
 .playBox {
     height: 80px;
@@ -88,6 +107,9 @@
     right: 0;
     @include animations(0.5s);
     transform: translateZ(0);
+    div{
+        text-align: center;
+    }
     p {
         color: white;
         text-align: center;

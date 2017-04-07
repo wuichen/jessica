@@ -25,54 +25,30 @@ export class Home extends React.Component {
 		this.props.dispatch({type: 'FETCH_JESSICA_CHANNEL_LIST'});
 		let thisComponent = this;
 
-		// $(window).on('scroll', function() {
-		//     var scrollTop = $(this).scrollTop();
+		$(window).on('scroll', function() {
+		    var scrollTop = $(this).scrollTop();
 
-		//     if (scrollTop > 10) {
-		//     	thisComponent.setState({
-		//     		hideVideos: false,
-		//     		hideOverlay: false,
-		//     		showVideo: false
-		//     	})
-		//     } else {
-		//     	thisComponent.setState({
-		//     		hideVideos: true
-		//     	})
-		    	
-		//     }
-		// });
-
-		$(window).bind('mousewheel', function(event) {
-		    if (event.originalEvent.wheelDelta >= 0 && !thisComponent.state.scrollingDetails) {
-		    	thisComponent.setState({
-		    		hideVideos: true
-		    	})		    
-		    } else {
+		    if (scrollTop > 10) {
 		    	thisComponent.setState({
 		    		hideVideos: false,
 		    		hideOverlay: false,
 		    		showVideo: false
 		    	})
-		    }
-		});
-
-		let ts;
-		$(window).bind('touchstart', function(e) {
-		    ts = e.originalEvent.touches[0].clientY;
-		});
-
-		$(window).bind('touchmove', function(e) {
-		    let te = e.originalEvent.changedTouches[0].clientY;
-		    if (ts > te) {
-		        console.log('down');
 		    } else {
-		        console.log('up');
+		    	thisComponent.setState({
+		    		hideVideos: true
+		    	})
+		    	
 		    }
 		});
 
 		setInterval(() => {
 			$('.fa-play-circle-o').toggleClass('jump')
-		}, 200)
+		}, 500)
+
+		// setInterval(() => {
+		// 	$('.fa-angle-double-down').toggleClass('blink')
+		// }, 1000)
 
 	}
 
@@ -145,6 +121,12 @@ export class Home extends React.Component {
 		},1000)
 	}
 
+	scrollDown() {
+		$('html, body').animate({
+		    scrollTop: 100
+		}, 1000);
+	}
+
   	// render
   	render() {
   		if (this.state.player) {
@@ -171,17 +153,24 @@ export class Home extends React.Component {
       				<p className='main-sub'>Make up, lookbook, and travel</p>
       				{this.state.hideVideos && (
       					<div>
-	      					<p className='playBox'>
+	      					<div className='playBox'>
 	      						<a href='#' onClick={() => {this.playVideo()}}>
 	      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
 								</a>
-							</p>
+							</div>
 							<div className='social-icons'>
 								<a href='http://weibo.com/u/5998160280?is_all=1'><img src='/media/weibo.png' alt='weibo' /></a>
 								<a href='https://www.instagram.com/jessicalinchannel/'><img src='/media/instagram.png' alt='instagram' /></a>
 								<a href='http://www.meipai.com/user/1097096832'><img src='/media/meipai.png' alt='meipai' /></a>
 								<a href='http://space.bilibili.com/44334605/#!/index'><img src='/media/bili.png' alt='bili' /></a>
 								<a href='https://www.youtube.com/channel/UCkmdNARD7bwvj2xlMotWoyg/about'><img src='/media/youtube.png' alt='youtube' /></a>
+							</div>
+							<div className='scrollBox'>
+								<a href='#' onClick={() => {this.scrollDown()}}>
+									<i className="fa fa-angle-double-down" aria-hidden="true"></i>
+									<br />
+									Scroll
+								</a>
 							</div>
 						</div>
       				)}
