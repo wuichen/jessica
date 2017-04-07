@@ -130,8 +130,7 @@ export class Home extends React.Component {
       			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: (this.state.isSmallIntro && this.props.jChannelList.length)})}>
       				<p className='main-title'>Jessica lin Channel</p>
       				<p className='main-sub'>Make up, lookbook, and travel</p>
-      				{!this.state.isSmallIntro && (
-      					<div>
+      					<div className={classnames('sub-intro', {onHide: this.state.isSmallIntro})}>
 	      					<p className='playBox'>
 	      						<a href='#' onClick={() => {this.playVideo()}}>
 	      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
@@ -145,7 +144,6 @@ export class Home extends React.Component {
 								<a href='https://www.youtube.com/channel/UCkmdNARD7bwvj2xlMotWoyg/about'><img src='/media/youtube.png' alt='youtube' /></a>
 							</div>
 						</div>
-					)}
       			</div>
 				<div className={classnames('video-background', { showVideo: this.state.showVideo, noBlur: this.state.hideOverlay})}>
 				    <div className="video-foreground">
