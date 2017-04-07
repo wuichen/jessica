@@ -73,6 +73,22 @@ export class Home extends React.Component {
 				this.state.player.load(this.props.selectedVideo.snippet.resourceId.videoId, false);
 			}
 		}
+
+		if (this.state.player) {
+  			let thisComponent = this;
+			this.state.player.on('paused', () => {
+				setTimeout(function() {
+				  	if (thisComponent.state.player.getState() === 'paused') {
+				  		thisComponent.setState({
+							hideOverlay: false,
+							showVideo: false,
+							hideVideos: false
+						})
+						window.scroll(0,150) 
+				  	}
+				}, 500)
+			})
+		}
 	}
 
 	playVideo() {
@@ -141,16 +157,6 @@ export class Home extends React.Component {
 
   	// render
   	render() {
-  		if (this.state.player) {
-			this.state.player.on('paused', () => {
-				this.setState({
-					hideOverlay: false,
-					showVideo: false,
-					hideVideos: false
-				})
-				window.scroll(0,150) 
-			})
-		}
 		let dateString;
 		if (this.props.selectedVideo) {
 			let date = new Date(this.props.selectedVideo.snippet.publishedAt);
