@@ -25,38 +25,36 @@ export class Home extends React.Component {
 		this.props.dispatch({type: 'FETCH_JESSICA_CHANNEL_LIST'});
 		let thisComponent = this;
 
-		// $(window).on('scroll', function() {
-		//     var scrollTop = $(this).scrollTop();
+		$(window).on('scroll', function() {
+		    var scrollTop = $(this).scrollTop();
 
-		//     if (scrollTop > 0) {
-		//     	thisComponent.setState({
-		//     		isSmallIntro: true,
-		//     		hideVideos: false,
-		//     		hideOverlay: false,
-		//     		showVideo: false
-		//     	})
-		//     } else {
-		//     	thisComponent.setState({
-		//     		isSmallIntro: false,
-		//     		hideVideos: true
-		//     	})
-		    	
-		//     }
-		// });
-
-		$(window).bind('mousewheel', function(event) {
-		    if (event.originalEvent.wheelDelta >= 0 && !thisComponent.state.scrollingDetails) {
-		    	thisComponent.setState({
-		    		hideVideos: true
-		    	})		    }
-		    else {
+		    if (scrollTop > 10) {
 		    	thisComponent.setState({
 		    		hideVideos: false,
 		    		hideOverlay: false,
 		    		showVideo: false
 		    	})
+		    } else {
+		    	thisComponent.setState({
+		    		hideVideos: true
+		    	})
+		    	
 		    }
 		});
+
+		// $(window).bind('mousewheel', function(event) {
+		//     if (event.originalEvent.wheelDelta >= 0 && !thisComponent.state.scrollingDetails) {
+		//     	thisComponent.setState({
+		//     		hideVideos: true
+		//     	})		    }
+		//     else {
+		//     	thisComponent.setState({
+		//     		hideVideos: false,
+		//     		hideOverlay: false,
+		//     		showVideo: false
+		//     	})
+		//     }
+		// });
 
 		setInterval(() => {
 			$('.fa-play-circle-o').toggleClass('jump')
