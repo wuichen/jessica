@@ -131,19 +131,6 @@
     opacity: 0;
 }
 
-
-.sub-intro {
-  opacity: 1;
-  @include animations(0.5s);
-  visibility:visible;
-}
-
-.sub-intro.onHide {
-  opacity: 0;
-  visibility:hidden;
-}
-
-
 .video-library {
     visibility: visible;
     text-align: center;
