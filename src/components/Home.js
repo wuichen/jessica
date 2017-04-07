@@ -45,11 +45,15 @@ export class Home extends React.Component {
 		setInterval(() => {
 			$('.fa-play-circle-o').toggleClass('jump')
 		}, 500)
+		setInterval(() => {
+			$('.scrollBox').toggleClass('blink')
+		}, 500)
 
-		// setInterval(() => {
-		// 	$('.fa-angle-double-down').toggleClass('blink')
-		// }, 1000)
-
+		$(document).keyup(function(e){
+		    if (e.keyCode === 27) {
+		    	thisComponent.state.player.pause();
+		    }     
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -104,6 +108,14 @@ export class Home extends React.Component {
 		} 
 	}
 
+	swipeRight(){
+	    $('.scrolls').animate({scrollLeft:'+=100'},500);
+	}
+
+	swipeLeft(){
+	    $('.scrolls').animate({scrollLeft:'-=100'},500);
+	}
+
 	disableBodyScroll() {
 		$('body').css('overflow-y','hidden');
 		this.setState({
@@ -153,11 +165,13 @@ export class Home extends React.Component {
       				<p className='main-sub'>Make up, lookbook, and travel</p>
       				{this.state.hideVideos && (
       					<div>
+      						{/*
 	      					<div className='playBox'>
 	      						<a href='#' onClick={() => {this.playVideo()}}>
 	      							<i className="fa fa-play-circle-o" aria-hidden="true"></i>
 								</a>
 							</div>
+							*/}
 							<div className='social-icons'>
 								<a href='http://weibo.com/u/5998160280?is_all=1'><img src='/media/weibo.png' alt='weibo' /></a>
 								<a href='https://www.instagram.com/jessicalinchannel/'><img src='/media/instagram.png' alt='instagram' /></a>
@@ -184,6 +198,8 @@ export class Home extends React.Component {
 				{this.props.jChannelList && (
 					<div>
 						<div className={classnames('video-library', { onHide: this.state.hideVideos})}>
+							<a className='carets left-caret' onClick={() => {this.swipeLeft();}}><i className="fa fa-caret-left" aria-hidden="true"></i></a>
+							<a className='carets right-caret' onClick={() => {this.swipeRight();}}><i className="fa fa-caret-right" aria-hidden="true"></i></a>
 							<div className='scrolls'>
 								{this.props.jChannelList && this.props.jChannelList.map((video) => {
 									let date = new Date(video.snippet.publishedAt);
@@ -222,14 +238,23 @@ export class Home extends React.Component {
 
 						<div onMouseOver={() => {this.disableBodyScroll()}} onMouseLeave={() => {this.enableBodyScroll()}} className={classnames('video-details', { onHide: this.state.hideVideos})}>
 							<div className='scroll'>
+								{($(document).width() <= 570) && (
+									<div className='playBox text-center'>
+										<a href='#' onClick={() => {this.playVideo()}}>
+				      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+										</a>
+									</div>
+								)}
 								<h2>
 									{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
 								</h2>
-								<div className='playBox'>
-									<a href='#' onClick={() => {this.playVideo()}}>
-			      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
-									</a>
-								</div>
+								{($(document).width() > 570) && (
+									<div className='playBox'>
+										<a href='#' onClick={() => {this.playVideo()}}>
+				      						<i className="fa fa-play-circle-o" aria-hidden="true"></i>
+										</a>
+									</div>
+								)}
 								{dateString && (
 									<p>
 										<strong>

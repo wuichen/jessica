@@ -82,7 +82,7 @@
   }
 }
 
-.scrollBox:hover {
+.scrollBox.blink {
   opacity: 0.4;
 }
 
@@ -171,6 +171,24 @@
     visibility: hidden;
     opacity: 0;
     transform: translate3d(0, 10%, 0);
+}
+
+.carets {
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    font-size: 100px;
+    color: white;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.left-caret {
+  left: 0;
+}
+
+.right-caret {
+  right: 0
 }
 
 .video-details {
@@ -289,6 +307,10 @@
 }
 
 @media screen and (max-width: 570px) {
+    
+    .carets {
+        top: 23%;
+    }
 
     .video-library {
         width: 100%;
