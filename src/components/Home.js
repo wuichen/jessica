@@ -49,6 +49,10 @@ export class Home extends React.Component {
 			$('.scrollBox').toggleClass('blink')
 		}, 500)
 
+		setInterval(() => {
+			$('.scrollUp').toggleClass('blink')
+		}, 500)
+
 		$(document).keyup(function(e){
 		    if (e.keyCode === 27) {
 		    	thisComponent.state.player.pause();
@@ -155,6 +159,12 @@ export class Home extends React.Component {
 		}, 1000);
 	}
 
+	scrollUp() {
+		$('html, body').animate({
+		    scrollTop: 0
+		}, 1000);
+	}
+
   	// render
   	render() {
 		let dateString;
@@ -168,7 +178,16 @@ export class Home extends React.Component {
 	      		<div className={classnames('overlay', { onHide: this.state.hideOverlay})}></div>
       			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: (!this.state.hideVideos && this.props.jChannelList.length)})}>
       				<p className='main-title'>Jessica lin Channel</p>
-      				<p className='main-sub'>Make up, lookbook, and travel</p>
+      				<p className='main-sub'>
+      					Make up, lookbook, and travel
+      					{/*!this.state.hideVideos && (
+      						<a className='scrollUp' onClick={()=> {this.scrollUp()}}>
+      							<br />
+			      				<i className="fa fa-angle-double-up" aria-hidden="true"></i><br />
+			      					Home
+      						</a>
+      					)*/}
+      				</p>
       				{this.state.hideVideos && (
       					<div>
       						{/*

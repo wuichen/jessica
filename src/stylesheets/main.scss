@@ -82,10 +82,17 @@
   }
 }
 
-.scrollBox.blink {
+.scrollBox.blink, .scrollUp.blink {
   opacity: 0.4;
 }
 
+.scrollUp {
+    text-decoration: none;
+    color: white;
+    opacity: 1;
+    @include animations(0.3s);
+    cursor: pointer;
+}
 
 .playBox {
     height: 80px;
