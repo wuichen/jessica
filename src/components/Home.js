@@ -105,12 +105,11 @@ export class Home extends React.Component {
 		} 
 	}
 
-	disableBodyScroll() {
+	preventBodyScroll() {
 		$('body').css('overflow','hidden');
-	}
-
-	enableBodyScroll() {
-		$('body').css('overflow','auto');
+		setTimeout(() => {
+			$('body').css('overflow','auto');
+		}, 1000)
 	}
 
   	// render
@@ -197,7 +196,7 @@ export class Home extends React.Component {
 							</div>
 						</div>
 
-						<div onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll} className={classnames('video-details', { onHide: this.state.hideVideos})}>
+						<div onScroll={this.preventBodyScroll} className={classnames('video-details', { onHide: this.state.hideVideos})}>
 							<h2>
 								{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
 							</h2>
