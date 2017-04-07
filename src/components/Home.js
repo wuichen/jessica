@@ -13,11 +13,11 @@ export class Home extends React.Component {
 	constructor(props)  {
 	    super(props);
 	    this.state = {
-	    	isSmallIntro: false,
 	    	hideVideos: true,
 	    	hideOverlay: false,
 	    	showVideo: false,
-	    	player: null
+	    	player: null,
+	    	scrollingDetails: false
 	   	};
 	}
 
@@ -25,22 +25,36 @@ export class Home extends React.Component {
 		this.props.dispatch({type: 'FETCH_JESSICA_CHANNEL_LIST'});
 		let thisComponent = this;
 
-		$(window).on('scroll', function() {
-		    var scrollTop = $(this).scrollTop();
+		// $(window).on('scroll', function() {
+		//     var scrollTop = $(this).scrollTop();
 
-		    if (scrollTop > 0) {
+		//     if (scrollTop > 0) {
+		//     	thisComponent.setState({
+		//     		isSmallIntro: true,
+		//     		hideVideos: false,
+		//     		hideOverlay: false,
+		//     		showVideo: false
+		//     	})
+		//     } else {
+		//     	thisComponent.setState({
+		//     		isSmallIntro: false,
+		//     		hideVideos: true
+		//     	})
+		    	
+		//     }
+		// });
+
+		$(window).bind('mousewheel', function(event) {
+		    if (event.originalEvent.wheelDelta >= 0 && !thisComponent.state.scrollingDetails) {
 		    	thisComponent.setState({
-		    		isSmallIntro: true,
+		    		hideVideos: true
+		    	})		    }
+		    else {
+		    	thisComponent.setState({
 		    		hideVideos: false,
 		    		hideOverlay: false,
 		    		showVideo: false
 		    	})
-		    } else {
-		    	thisComponent.setState({
-		    		isSmallIntro: false,
-		    		hideVideos: true
-		    	})
-		    	
 		    }
 		});
 
@@ -48,9 +62,6 @@ export class Home extends React.Component {
 			$('.fa-play-circle-o').toggleClass('jump')
 		}, 200)
 
-		// setInterval(() => {
-		// 	$('.fa-ellipsis-h').toggleClass('jump')
-		// }, 200)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -76,7 +87,6 @@ export class Home extends React.Component {
 		this.state.player.play();
 		let thisComponent = this;
 		this.setState({
-    		isSmallIntro: true,
     		hideVideos: true,
     		hideOverlay: true
     	})
@@ -108,10 +118,19 @@ export class Home extends React.Component {
 
 	disableBodyScroll() {
 		$('body').css('overflow-y','hidden');
+		this.setState({
+			scrollingDetails: true
+		})
 	}
 
 	enableBodyScroll() {
 		$('body').css('overflow-y','auto');
+		let thisComponent = this;
+		setTimeout(() => {
+			thisComponent.setState({
+				scrollingDetails: false
+			})
+		},1000)
 	}
 
   	// render
@@ -121,8 +140,7 @@ export class Home extends React.Component {
 				this.setState({
 					hideOverlay: false,
 					showVideo: false,
-					hideVideos: false,
-					isSmallIntro: true
+					hideVideos: false
 				})
 				window.scroll(0,150) 
 			})
@@ -136,10 +154,10 @@ export class Home extends React.Component {
 	    return (
 	      	<div className="page-home">
 	      		<div className={classnames('overlay', { onHide: this.state.hideOverlay})}></div>
-      			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: (this.state.isSmallIntro && this.props.jChannelList.length)})}>
+      			<div className={classnames('main-intro', { onHide: this.state.showVideo, onMoveTop: (!this.state.hideVideos && this.props.jChannelList.length)})}>
       				<p className='main-title'>Jessica lin Channel</p>
       				<p className='main-sub'>Make up, lookbook, and travel</p>
-      				{!this.state.isSmallIntro && (
+      				{this.state.hideVideos && (
       					<div>
 	      					<p className='playBox'>
 	      						<a href='#' onClick={() => {this.playVideo()}}>
@@ -201,7 +219,7 @@ export class Home extends React.Component {
 							</div>
 						</div>
 
-						<div onMouseOver={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll} className={classnames('video-details', { onHide: this.state.hideVideos})}>
+						<div onMouseOver={() => {this.disableBodyScroll()}} onMouseLeave={() => {this.enableBodyScroll()}} className={classnames('video-details', { onHide: this.state.hideVideos})}>
 							<h2>
 								{this.props.selectedVideo && this.props.selectedVideo.snippet.title}
 							</h2>
