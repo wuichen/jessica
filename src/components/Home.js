@@ -129,11 +129,11 @@ export class Home extends React.Component {
 	}
 
 	swipeRight(){
-	    $('.scrolls').animate({scrollLeft:'+=100'},500);
+	    $('.scrolls').animate({scrollLeft:'+=300'},500);
 	}
 
 	swipeLeft(){
-	    $('.scrolls').animate({scrollLeft:'-=100'},500);
+	    $('.scrolls').animate({scrollLeft:'-=300'},500);
 	}
 
 	disableBodyScroll() {
@@ -232,10 +232,11 @@ export class Home extends React.Component {
 									let divStyle = {
 								      backgroundImage: 'url(' + video.snippet.thumbnails.medium.url + ')'
 								    };
+								    let selected = (video.id === this.props.selectedVideo.id)
 									return (
 										<div
 											style={divStyle} 
-											className='videoCard' 
+											className={classnames('videoCard', {selected: selected})}
 											key={video.id}
 											onClick={() => {
 												this.selectVideo(video);

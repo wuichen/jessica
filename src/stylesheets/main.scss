@@ -313,6 +313,13 @@
   }
 }
 
+.videoCard.selected {
+  background-size: 480px;
+  .videoCard-desc {
+      opacity: 1;
+  }
+}
+
 @media screen and (max-width: 570px) {
     
     .carets {
